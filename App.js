@@ -16,7 +16,7 @@ export default function App() {
     <Stack.Navigator styles={styles.container}>
       <Stack.Screen name="Landing" component={Landing} />
       <Stack.Screen name="UA" component={UA} />
-      <Stack.Screen name="PI" component={PersonalInfo} />
+      <Stack.Screen name="Personal Information" component={PersonalInfo} />
     </Stack.Navigator>
     </NavigationContainer>
   );

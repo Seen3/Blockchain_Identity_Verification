@@ -24,19 +24,19 @@ const style = StyleSheet.create({
   },
   button: {
     backgroundColor: '#007bff',
-    color: '#fff',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 20,
     paddingRight: 20,
     border: 'none',
     borderRadius: 4,
+  },
+  buttonText:{
     fontSize: 20,
     fontWeight: 'bold',
-  },
-
-
-})
+    color:'#fff',
+  }
+});
 
 
 function Landing({ navigation }) {
