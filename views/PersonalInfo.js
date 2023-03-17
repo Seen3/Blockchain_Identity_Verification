@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-const PersonalInfo =()=>{
+const PersonalInfo =({ navigation })=>{
     const [name, onChangeName] = React.useState('');
     const [dob, onChangeDob] = React.useState('');
     const [address, onChangeAddress] = React.useState('');

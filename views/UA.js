@@ -1,11 +1,14 @@
 import React from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-const SignUp =()=>{
+const SignUp =({ navigation })=>{
     const [text, onChangeText] = React.useState('');
     const [text2, onChangeText2] = React.useState('');
+    const goToPI = () => {
+        navigation.navigate('PI');
+      };
     return(
         <View>
-            <Text>Please Details and Create a Password</Text>
+            <Text>Please Enter Details and Create a Password</Text>
             <TextInput
             autoComplete="tel-national"
             inputMode={"numeric"}
@@ -17,7 +20,7 @@ const SignUp =()=>{
             secureTextEntry={true}
             value={text2}
             placeholder={'Password'} />
-            <Button title='Sign Up'></Button>
+            <Button title='Sign Up' onPress={goToPI}></Button>
         </View>
     )
     
