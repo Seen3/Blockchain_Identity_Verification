@@ -1,7 +1,13 @@
 import React from 'react';
-import axios from 'axios';
 import { TouchableOpacity, StyleSheet, Text, TextInput, View } from 'react-native';
+import sha256 from 'js-sha256';
+//import Web3 from 'web3';
+//const web3 = new Web3('http://localhost:8545');
 
+
+//const contractABI = [{ ... }];
+
+//const contractAddress = '0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8';
 const style = StyleSheet.create({
     container: {
         display: 'flex',
@@ -47,10 +53,10 @@ const SignUp = ({ navigation }) => {
     async function handleSignUp(event) {
         event.preventDefault();
         const user = text;
-        const pass = text2;
-        axios.post(`http://localhost:6699/SignUp`, { user, pass }).then(res => {
-            console.log(res);
-        })
+        console.log(user);
+        const pass = sha256(user);
+        console.log(user,pass);
+        //Get contract here
         await goToPI();
     }
     return (

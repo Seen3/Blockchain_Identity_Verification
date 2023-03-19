@@ -1,27 +1,33 @@
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.18;
+//SPDX-License-Identifier:MIT
 
-contract IdentityVerification {
-    struct User {
+contract SignUpIn{
+    mapping(string => string) private userPasswords;
+    function setPassword(string memory username, string memory passwordHash) public {
+        userPasswords[username] = passwordHash;
+    }
+    function getPassword(string memory username) public view returns (string memory) {
+        return userPasswords[username];
+    }
+}
+contract CheckAAdhar{
+    struct Person{
+        uint _id;
         string name;
-        string email;
-        string phone;
-        string Address;
-        bool verified;
+        string aadhar;
+        string dob;
+        string addr;
     }
     
-    mapping (Address => User) public users;
-    
-    function addUser(string memory _name, string memory _email, string memory _phone, string memory _address) public {
-        users[msg.sender] = User(_name, _email, _phone, _address, false);
+    mapping(string => Person) public people;
+
+    function addPerson(uint _id, string memory name, string memory aadhar, string memory dob, string memory addr) public {
+        Person memory newPerson = Person(_id, name, aadhar, dob, addr);
+        people[aadhar] = newPerson;
     }
-    
-    function verifyUser(Address _userAddress) public {
-        require(msg.sender == _userAddress, "Only user can verify their identity.");
-        users[_userAddress].verified = true;
-    }
-    
-    function getUser(Address _userAddress) public view returns(string memory, string memory, string memory, string memory, bool) {
-        User memory user = users[_userAddress];
-        return (user.name, user.email, user.phone, user.Address, user.verified);
+
+    function getPerson(string memory aadhar) public view returns (uint, string memory, string memory, string memory, string memory) {
+        Person memory person = people[aadhar];
+        return (person._id, person.name, person.dob, person.addr, person.aadhar);
     }
 }
