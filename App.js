@@ -1,9 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import "react-native-get-random-values"
+import './global';
+//import "@ethersproject/shims"
+//import { ethers } from "@ethersproject/shims";
 const Stack = createStackNavigator();
-console.log(Stack);
+
+
 
 import { Button, StyleSheet, Text, View } from 'react-native';
 import Landing from './views/Landing.js'

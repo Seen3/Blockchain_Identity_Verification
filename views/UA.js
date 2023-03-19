@@ -1,13 +1,19 @@
+
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text, TextInput, View } from 'react-native';
 import sha256 from 'js-sha256';
-//import Web3 from 'web3';
-//const web3 = new Web3('http://localhost:8545');
+import Web3 from 'web3'
+import { ContractABI } from "./ContractABI";
+
+const web3 = new Web3(new Web3.providers.HttpProvider("HTTP://10.14.142.229:7545"));
+web3.eth.defaultAccount = web3.eth.accounts[0];
+const RemixContract = new web3.eth.Contract(
+    ContractABI,
+    "0x3611DE4bd0DAACa71d41BD95609A00E8c5074845"
+);
+//console.log("Remix",RemixContract);
 
 
-//const contractABI = [{ ... }];
-
-//const contractAddress = '0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8';
 const style = StyleSheet.create({
     container: {
         display: 'flex',
@@ -31,15 +37,15 @@ const style = StyleSheet.create({
         borderRadius: 4,
         fontSize: 16,
     },
-    button:{
-        paddingHorizontal:20,
-        paddingVertical:10,
-        borderRadius:4,
-        backgroundColor:"#007bff",
+    button: {
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderRadius: 4,
+        backgroundColor: "#007bff",
     },
-    buttonText:{
-        color:'#fff',
-        fontSize:16,
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
     }
 });
 
@@ -53,11 +59,18 @@ const SignUp = ({ navigation }) => {
     async function handleSignUp(event) {
         event.preventDefault();
         const user = text;
-        console.log(user);
+        //console.log(user);
         const pass = sha256(user);
-        console.log(user,pass);
+        console.log(user, pass);
         //Get contract here
-        await goToPI();
+        RemixContract.methods.setPassword(user, pass).send({ from:"0xf595218e8e3AaE625317CfEF5fe3d4E849C02c54",gas:500 })
+            .then((receipt) => {
+                console.log(receipt);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        goToPI();
     }
     return (
         <View style={style.container}>

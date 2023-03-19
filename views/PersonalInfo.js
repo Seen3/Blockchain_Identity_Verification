@@ -1,5 +1,15 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text, TextInput, View,Alert } from 'react-native';
+
+import Web3 from 'web3'
+import { ContractABI } from "./ContractABI";
+
+const web3 = new Web3(new Web3.providers.HttpProvider("HTTP://10.14.142.229:7545"));
+web3.eth.defaultAccount = web3.eth.accounts[0];
+const RemixContract = new web3.eth.Contract(
+    ContractABI,
+    "0x3611DE4bd0DAACa71d41BD95609A00E8c5074845"
+);
 const PersonalInfo = ({ navigation }) => {
     const [name, onChangeName] = React.useState('');
     const [dob, onChangeDob] = React.useState('');
@@ -49,10 +59,22 @@ const PersonalInfo = ({ navigation }) => {
         }
     });
     function conf(){
-        Alert.alert('Registeration Verified', 'You are now registered', [
-            {text: '^-^', onPress: () => console.log('OK Pressed')},
-          ]);
-          navigation.navigate('Landing');
+        //Work needs to be done here
+        RemixContract.methods.setDetails(name,dob,address,aadhar).send({ from:"0xf595218e8e3AaE625317CfEF5fe3d4E849C02c54",gas:5000 })
+            .then((receipt) => {
+                console.log(receipt);
+
+
+                Alert.alert('Registeration Verified', 'You are now registered', [
+                    {text: '^-^', onPress: () => console.log('OK Pressed')},
+                  ]);
+                  navigation.navigate('Landing');
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+            //Here
+        
     }
     return (
         <View style={style.container}>

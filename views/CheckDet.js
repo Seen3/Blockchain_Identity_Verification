@@ -1,5 +1,16 @@
 import { StyleSheet, TouchableOpacity, Text, View, Image,TextInput, Alert } from 'react-native';
 import React from 'react';
+import Web3 from 'web3'
+import { ContractABI } from "./ContractABI";
+
+const web3 = new Web3(new Web3.providers.HttpProvider("HTTP://10.14.142.229:7545"));
+web3.eth.defaultAccount = web3.eth.accounts[0];
+const RemixContract = new web3.eth.Contract(
+    ContractABI,
+    "0x3611DE4bd0DAACa71d41BD95609A00E8c5074845"
+);
+
+
 const style = StyleSheet.create({
     container: {
       display: 'flex',
@@ -49,9 +60,24 @@ const style = StyleSheet.create({
   });
 
 function check(){
-    Alert.alert('Checked The database', 'The user is a verified member', [
-        {text: 'OK',},
-      ]);
+
+
+  RemixContract.methods.setDetails(name,dob,address,aadhar).send({ from:"0xf595218e8e3AaE625317CfEF5fe3d4E849C02c54",gas:5000 })
+            .then((receipt) => {
+                console.log(receipt);
+
+
+                Alert.alert('Checked The database', 'The user is a verified member', [
+                  {text: 'OK',},
+                ]);
+            })
+            .catch((error) => {
+                console.error(error);
+                Alert.alert('Checked The database', 'The user not a member', [
+                  {text: 'OK',},
+                ]);
+            });
+    
 }
 function CheckDet({ navigation }) {
     const [text, onChangeText] = React.useState('');
