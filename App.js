@@ -10,13 +10,17 @@ import Landing from './views/Landing.js'
 import UA from './views/UA.js'
 import React from 'react';
 import PersonalInfo from './views/PersonalInfo.js';
+import SignIn from './views/SignIn.js';
+import CheckDet from './views/CheckDet.js';
 export default function App() {
   return (
     <NavigationContainer>
     <Stack.Navigator styles={styles.container}>
       <Stack.Screen name="Landing" component={Landing} />
-      <Stack.Screen name="UA" component={UA} />
+      <Stack.Screen name="Sign Up" component={UA} />
+      <Stack.Screen name="Sign In" component={SignIn}/>
       <Stack.Screen name="Personal Information" component={PersonalInfo} />
+      <Stack.Screen name="Check Details" component={CheckDet} />
     </Stack.Navigator>
     </NavigationContainer>
   );

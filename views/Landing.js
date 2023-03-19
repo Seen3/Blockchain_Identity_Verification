@@ -1,4 +1,4 @@
-import { Component } from "react";
+
 import { StyleSheet, TouchableOpacity, Text, View, Image } from 'react-native';
 
 const style = StyleSheet.create({
@@ -30,6 +30,7 @@ const style = StyleSheet.create({
     paddingRight: 20,
     border: 'none',
     borderRadius: 4,
+    marginBottom:8,
   },
   buttonText:{
     fontSize: 20,
@@ -40,8 +41,11 @@ const style = StyleSheet.create({
 
 
 function Landing({ navigation }) {
+  const goToSignUp = () => {
+    navigation.navigate('Sign Up');
+  };
   const goToSignIn = () => {
-    navigation.navigate('UA');
+    navigation.navigate('Sign In');
   };
 
   return (
@@ -51,8 +55,11 @@ function Landing({ navigation }) {
         style={{ width: 350, height: 350 }} />
       <Text style={style.text}>This Project is a Blockchain Based Project </Text>
       <Text style={style.text}>This is the Landing Page</Text>
-      <TouchableOpacity style={style.button} onPress={goToSignIn}>
+      <TouchableOpacity style={style.button} onPress={goToSignUp}>
         <Text style={style.buttonText}>Begin</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={style.button} onPress={goToSignIn}>
+        <Text style={style.buttonText}>Already a member?</Text>
       </TouchableOpacity>
 
     </View>

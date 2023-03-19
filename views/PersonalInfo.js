@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, TextInput, View } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, TextInput, View,Alert } from 'react-native';
 const PersonalInfo = ({ navigation }) => {
     const [name, onChangeName] = React.useState('');
     const [dob, onChangeDob] = React.useState('');
@@ -11,6 +11,13 @@ const PersonalInfo = ({ navigation }) => {
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: '#f5f5f5',
+
+        },
+        warning:{
+            fontSize:12,
+            fontWeight:'bold',
+            color:'red',
+            fontFamily:'monospace',
 
         },
         heading: {
@@ -41,9 +48,16 @@ const PersonalInfo = ({ navigation }) => {
             textAlign: 'center',
         }
     });
+    function conf(){
+        Alert.alert('Registeration Verified', 'You are now registered', [
+            {text: '^-^', onPress: () => console.log('OK Pressed')},
+          ]);
+          navigation.navigate('Landing');
+    }
     return (
         <View style={style.container}>
             <Text style={style.heading}>Please Enter Your Details</Text>
+            <Text style={style.warning}>You cannot visit this page again</Text>
             <TextInput style={style.input}
                 onChangeText={onChangeName}
                 value={name}
@@ -63,7 +77,7 @@ const PersonalInfo = ({ navigation }) => {
                 value={aadhar}
                 placeholder={'Aadhar Number'}
             />
-            <TouchableOpacity style={style.button} >
+            <TouchableOpacity style={style.button} onPress={conf}>
                 <Text style={style.buttonText}>Confirm</Text>
             </TouchableOpacity>
         </View>
