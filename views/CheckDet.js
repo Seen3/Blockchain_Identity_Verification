@@ -1,15 +1,15 @@
 import { StyleSheet, TouchableOpacity, Text, View, Image,TextInput, Alert } from 'react-native';
 import React from 'react';
-import Web3 from 'web3'
 import { ContractABI } from "./ContractABI";
 
-const web3 = new Web3(new Web3.providers.HttpProvider("HTTP://10.14.142.229:7545"));
-web3.eth.defaultAccount = web3.eth.accounts[0];
-const RemixContract = new web3.eth.Contract(
-    ContractABI,
-    "0x3611DE4bd0DAACa71d41BD95609A00E8c5074845"
-);
+import { ContractABI2 } from "./ContractABI";
+import Contract from 'web3-eth-contract';
 
+Contract.setProvider('http://10.14.142.148:7545');
+let contract=new Contract(
+    ContractABI2,
+    "0x1Adfaa218C94df198a651EB9854228E38E708feb"
+);
 
 const style = StyleSheet.create({
     container: {
@@ -59,28 +59,23 @@ const style = StyleSheet.create({
     }
   });
 
-function check(){
 
-
-  RemixContract.methods.setDetails(name,dob,address,aadhar).send({ from:"0xf595218e8e3AaE625317CfEF5fe3d4E849C02c54",gas:5000 })
-            .then((receipt) => {
-                console.log(receipt);
-
-
-                Alert.alert('Checked The database', 'The user is a verified member', [
-                  {text: 'OK',},
-                ]);
-            })
-            .catch((error) => {
-                console.error(error);
-                Alert.alert('Checked The database', 'The user not a member', [
-                  {text: 'OK',},
-                ]);
-            });
-    
-}
 function CheckDet({ navigation }) {
     const [text, onChangeText] = React.useState('');
+    function change(){
+      navigation.navigate('Personal Information');
+    }
+    function check(){
+      contract.methods.getDetails(text).send({ from: "0x092c74b8E896ba4cbB520D8E17d93A22885c1a6D", gas: 500000 })
+            .on('receipt', function (receipt) {
+              console.log(receipt);
+                let P=receipt.events.PersonReturned.returnValues;
+                console.log(P);
+            })
+            .on('error', function (error) {
+                console.error(error);
+            });
+    }
     return (
       <View style={style.container}>
         <Text style={style.title}>Welcome</Text>
@@ -96,6 +91,9 @@ function CheckDet({ navigation }) {
                 placeholder={'AADHAR'} />
         <TouchableOpacity style={style.button} onPress={check}>
           <Text style={style.buttonText}>Check for User</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={style.button} onPress={change}>
+          <Text style={style.buttonText}>Change your details</Text>
         </TouchableOpacity>
   
       </View>

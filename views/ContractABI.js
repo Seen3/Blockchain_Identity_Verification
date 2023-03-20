@@ -74,6 +74,32 @@ export const ContractABI2=[
 		"inputs": [
 			{
 				"internalType": "string",
+				"name": "aadhar",
+				"type": "string"
+			}
+		],
+		"name": "getDetails",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "json",
+				"type": "string"
+			}
+		],
+		"name": "PersonReturned",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
 				"name": "name",
 				"type": "string"
 			},
@@ -96,47 +122,6 @@ export const ContractABI2=[
 		"name": "setDetails",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "aadhar",
-				"type": "string"
-			}
-		],
-		"name": "getDetails",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "name",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "dob",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "add",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "aadhar",
-						"type": "string"
-					}
-				],
-				"internalType": "struct MakeDetails.Person",
-				"name": "",
-				"type": "tuple"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	}
 ]

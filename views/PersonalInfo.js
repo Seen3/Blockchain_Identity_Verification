@@ -8,7 +8,7 @@ let contract = new Contract(
     ContractABI2,
     "0x8542eDBDA78E1F1040752F70cfCC9aDF02cBBfDb"
 );
-
+//console.log(ContractABI2);
 const PersonalInfo = ({ navigation }) => {
     const [name, onChangeName] = React.useState('');
     const [dob, onChangeDob] = React.useState('');
@@ -79,7 +79,7 @@ const PersonalInfo = ({ navigation }) => {
     return (
         <View style={style.container}>
             <Text style={style.heading}>Please Enter Your Details</Text>
-            <Text style={style.warning}>You cannot visit this page again</Text>
+            <Text style={style.warning}>This will be used to verify you</Text>
             <TextInput style={style.input}
                 onChangeText={onChangeName}
                 value={name}
