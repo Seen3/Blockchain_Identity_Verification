@@ -3,7 +3,7 @@ pragma solidity ^0.8.18;
 
 contract SignUpIn{
     mapping(string => string) private userPasswords;
-    function setPassword(string memory username, string memory passwordHash) public {
+    function setPassword(string memory username, string  memory passwordHash) public{
         userPasswords[username] = passwordHash;
     }
     function getPassword(string memory username) public view returns (string memory) {

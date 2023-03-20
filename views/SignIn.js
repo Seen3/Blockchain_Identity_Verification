@@ -1,5 +1,14 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, TextInput, View } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, TextInput, View, Alert  } from 'react-native';
+import sha256 from 'js-sha256';
+import { ContractABI } from "./ContractABI";
+import Contract from 'web3-eth-contract';
+
+Contract.setProvider('http://10.14.142.148:7545');
+let contract = new Contract(
+    ContractABI,
+    "0x1Adfaa218C94df198a651EB9854228E38E708feb"
+);
 
 const style = StyleSheet.create({
     container: {
@@ -24,15 +33,15 @@ const style = StyleSheet.create({
         borderRadius: 4,
         fontSize: 16,
     },
-    button:{
-        paddingHorizontal:20,
-        paddingVertical:10,
-        borderRadius:4,
-        backgroundColor:"#007bff",
+    button: {
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderRadius: 4,
+        backgroundColor: "#007bff",
     },
-    buttonText:{
-        color:'#fff',
-        fontSize:16,
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
     }
 });
 
@@ -40,13 +49,32 @@ const style = StyleSheet.create({
 const SignIn = ({ navigation }) => {
     const [text, onChangeText] = React.useState('');
     const [text2, onChangeText2] = React.useState('');
-    
+
     async function handleSignUp(event) {
         event.preventDefault();
         const user = text;
-        const pass = text2;
-        navigation.navigate('Check Details');
+        const pass = sha256(text2);
+        console.log(user,pass);
+        contract.methods.getPassword(user).send({ from: "0x092c74b8E896ba4cbB520D8E17d93A22885c1a6D", gas: 500000 })
+            .on('receipt', function (receipt) {
+                let P=receipt.events.PasswordReturned.returnValues.password;
+                console.log(P);
+                if (P==pass)
+                {
+                    navigation.navigate('Check Details');
+                }
+                else{
+                    Alert.alert('Invalid Login', 'Please check your number and password', [
+                        { text: '\'^\'', onPress: () => console.log('OK Pressed') },
+                    ]);
+                }
+            })
+            .on('error', function (error) {
+                console.error(error);
+            });
         
+
+
     }
     return (
         <View style={style.container}>

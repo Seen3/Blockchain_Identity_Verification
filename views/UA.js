@@ -2,15 +2,20 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text, TextInput, View } from 'react-native';
 import sha256 from 'js-sha256';
-import Web3 from 'web3'
+//import Web3 from 'web3'
 import { ContractABI } from "./ContractABI";
+import Contract from 'web3-eth-contract';
 
-const web3 = new Web3(new Web3.providers.HttpProvider("HTTP://10.14.142.229:7545"));
-web3.eth.defaultAccount = web3.eth.accounts[0];
-const RemixContract = new web3.eth.Contract(
+Contract.setProvider('http://10.14.142.148:7545');
+let contract=new Contract(
     ContractABI,
-    "0x3611DE4bd0DAACa71d41BD95609A00E8c5074845"
+    "0x1Adfaa218C94df198a651EB9854228E38E708feb"
 );
+
+//const RemixContract = new web3.eth.Contract(
+//    ContractABI,
+//    "0x521EAe44Ec4187c5623E00548c06Ab1004d74eFa"
+//);
 //console.log("Remix",RemixContract);
 
 
@@ -60,10 +65,12 @@ const SignUp = ({ navigation }) => {
         event.preventDefault();
         const user = text;
         //console.log(user);
-        const pass = sha256(user);
+        const pass = sha256(text2);
         console.log(user, pass);
         //Get contract here
-        RemixContract.methods.setPassword(user, pass).send({ from:"0xf595218e8e3AaE625317CfEF5fe3d4E849C02c54",gas:500 })
+        let gasVal=contract.methods.setPassword(user,pass).estimateGas();
+        console.log(gasVal);
+        contract.methods.setPassword(user, pass).send({ from:"0x092c74b8E896ba4cbB520D8E17d93A22885c1a6D" ,gas:500000})
             .then((receipt) => {
                 console.log(receipt);
             })

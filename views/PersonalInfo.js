@@ -1,15 +1,14 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, TextInput, View,Alert } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, TextInput, View, Alert } from 'react-native';
+import Contract from 'web3-eth-contract';
+import { ContractABI2 } from "./ContractABI";
 
-import Web3 from 'web3'
-import { ContractABI } from "./ContractABI";
-
-const web3 = new Web3(new Web3.providers.HttpProvider("HTTP://10.14.142.229:7545"));
-web3.eth.defaultAccount = web3.eth.accounts[0];
-const RemixContract = new web3.eth.Contract(
-    ContractABI,
-    "0x3611DE4bd0DAACa71d41BD95609A00E8c5074845"
+Contract.setProvider('http://10.14.142.148:7545');
+let contract = new Contract(
+    ContractABI2,
+    "0x8542eDBDA78E1F1040752F70cfCC9aDF02cBBfDb"
 );
+
 const PersonalInfo = ({ navigation }) => {
     const [name, onChangeName] = React.useState('');
     const [dob, onChangeDob] = React.useState('');
@@ -23,11 +22,11 @@ const PersonalInfo = ({ navigation }) => {
             backgroundColor: '#f5f5f5',
 
         },
-        warning:{
-            fontSize:12,
-            fontWeight:'bold',
-            color:'red',
-            fontFamily:'monospace',
+        warning: {
+            fontSize: 12,
+            fontWeight: 'bold',
+            color: 'red',
+            fontFamily: 'monospace',
 
         },
         heading: {
@@ -58,23 +57,24 @@ const PersonalInfo = ({ navigation }) => {
             textAlign: 'center',
         }
     });
-    function conf(){
+    function conf() {
         //Work needs to be done here
-        RemixContract.methods.setDetails(name,dob,address,aadhar).send({ from:"0xf595218e8e3AaE625317CfEF5fe3d4E849C02c54",gas:5000 })
+        contract.methods.setDetails(name, dob,address,aadhar).send({ from:"0x092c74b8E896ba4cbB520D8E17d93A22885c1a6D" ,gas:500000})
             .then((receipt) => {
                 console.log(receipt);
-
-
                 Alert.alert('Registeration Verified', 'You are now registered', [
-                    {text: '^-^', onPress: () => console.log('OK Pressed')},
-                  ]);
-                  navigation.navigate('Landing');
+                    { text: '^-^', onPress: () => console.log('OK Pressed') },
+                ]);
+                navigation.navigate('Landing');
             })
             .catch((error) => {
                 console.error(error);
             });
-            //Here
+
         
+
+        //Here
+
     }
     return (
         <View style={style.container}>
