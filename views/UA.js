@@ -6,17 +6,11 @@ import sha256 from 'js-sha256';
 import { ContractABI } from "./ContractABI";
 import Contract from 'web3-eth-contract';
 
-Contract.setProvider('http://10.14.142.148:7545');
+Contract.setProvider('http://10.14.142.181:7545');
 let contract=new Contract(
     ContractABI,
-    "0x1Adfaa218C94df198a651EB9854228E38E708feb"
+    "0xEa52086Db1141D83a615c2ba5B3232152Aa7EA94"
 );
-
-//const RemixContract = new web3.eth.Contract(
-//    ContractABI,
-//    "0x521EAe44Ec4187c5623E00548c06Ab1004d74eFa"
-//);
-//console.log("Remix",RemixContract);
 
 
 const style = StyleSheet.create({
@@ -70,12 +64,12 @@ const SignUp = ({ navigation }) => {
         //Get contract here
         let gasVal=contract.methods.setPassword(user,pass).estimateGas();
         console.log(gasVal);
-        contract.methods.setPassword(user, pass).send({ from:"0x092c74b8E896ba4cbB520D8E17d93A22885c1a6D" ,gas:500000})
+        contract.methods.setPassword(user, pass).send({ from:"0x8A94ee5A61e2AA7a5CDFC864A02BC87212CD9Ba0" ,gas:500000})
             .then((receipt) => {
                 console.log(receipt);
             })
             .catch((error) => {
-                console.error(error);
+                console.error("Error:",error);
             });
         goToPI();
     }

@@ -3,10 +3,10 @@ import { TouchableOpacity, StyleSheet, Text, TextInput, View, Alert } from 'reac
 import Contract from 'web3-eth-contract';
 import { ContractABI2 } from "./ContractABI";
 
-Contract.setProvider('http://10.14.142.148:7545');
+Contract.setProvider('http://10.14.142.181:7545');
 let contract = new Contract(
     ContractABI2,
-    "0x8542eDBDA78E1F1040752F70cfCC9aDF02cBBfDb"
+    "0xC8d3482371245b0C4bA6Da4bB061930600D55778"
 );
 //console.log(ContractABI2);
 const PersonalInfo = ({ navigation }) => {
@@ -59,7 +59,7 @@ const PersonalInfo = ({ navigation }) => {
     });
     function conf() {
         //Work needs to be done here
-        contract.methods.setDetails(name, dob,address,aadhar).send({ from:"0x092c74b8E896ba4cbB520D8E17d93A22885c1a6D" ,gas:500000})
+        contract.methods.setDetails(name, dob,address,aadhar).send({ from:"0x8A94ee5A61e2AA7a5CDFC864A02BC87212CD9Ba0" ,gas:500000})
             .then((receipt) => {
                 console.log(receipt);
                 Alert.alert('Registeration Verified', 'You are now registered', [
