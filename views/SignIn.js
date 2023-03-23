@@ -59,7 +59,7 @@ const SignIn = ({ navigation }) => {
             .on('receipt', function (receipt) {
                 let P=receipt.events.PasswordReturned.returnValues.password;
                 console.log(P);
-                if (P==pass)
+                if (pass!="" && P==pass)
                 {
                     navigation.navigate({name:'Check Details',params:{uname:text}});
                 }
